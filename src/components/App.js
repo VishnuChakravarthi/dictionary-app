@@ -25,8 +25,7 @@ const App = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [listItems, setListItems] = useState([]);
   const [list, setList] = useState([]);
-
-  console.log(list);
+  const [name, setName] = useState([]);
 
   //filtering records based on user input
   useEffect(() => {
@@ -35,10 +34,19 @@ const App = () => {
         lists.id.toLowerCase().includes(searchValue.toLowerCase())
       )
     );
-  }, [searchValue]);
+    setName(
+      listItems.map((list) => {
+        return list.id;
+      })
+    );
+  }, [listItems, searchValue]);
 
   //function to add new word to the record
   const addNewWord = async (value) => {
+    if (name.find((n) => n === value.toLowerCase())) {
+      alert("Record exists already");
+      return;
+    }
     const response = await axios.get(`/add/${value}`);
     getData();
     setShowMessage(true);

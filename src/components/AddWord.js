@@ -43,6 +43,7 @@ const AddWord = ({ addNewWord }) => {
     if (value) {
       addNewWord(value);
       setOpen(false);
+      setValue("");
     }
   };
 
